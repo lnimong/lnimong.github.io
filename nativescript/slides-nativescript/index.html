@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<h1>Nativescript</h1>
+			               	<img style="vertical-align:top;border:none;box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);" width="200" src="./img/nativescriptlogo.png">
+					</section>
+					<section>
+						<div style="text-align:center">
+				            <div style="display:inline-block;vertical-align:top">
+				                <img width="300" src="./img/capt.png">
+				                <div>lionel</div>
+				                <div style="font-size:.6em;color:blue">(@lionelthemonk)</div>
+				            </div>
+				            <div style="display:inline-block;vertical-align:top">
+				                <img width="300" src="./img/iron.png">
+				                <div>andrei</div>
+				                <div style="font-size:.6em;color:blue">(@talant_a)</div>
+				            </div>
+				        </div>
+					</section>
+				</section>
+
+				<section>
+					
+					<section>
+						<h3>La problématique : partager du code</h3>
+						<div style="vertical-align:top">
+			               	<img style="vertical-align:top;border-color:#fafafa" width="100" src="./img/xamarinlogo.png">
+			               	<img style="vertical-align:top;border-color:#fafafa" width="100" src="./img/cordovalogo.png">
+			               	<img style="vertical-align:top;border-color:#fafafa" width="60" src="./img/titaniumlogo.png">
+			               	<img style="vertical-align:top;border-color:#fafafa" width="150" src="./img/nativescriptlogo.png">
+			               	<img style="vertical-align:top;border-color:#fafafa" width="80" src="./img/reactlogo.png">
+			               	<img style="vertical-align:top;border-color:#fafafa" height="60" src="./img/fusetoolslogo.png">
+						</div>
+					</section>
+
+					<section>
+						<div>
+			               	<img style="vertical-align:top;border-color:#fafafa" width="150" src="./img/nativescriptlogo.png">
+							<div style="margin-bottom:.5em">Un seul langage : le <span style="color:blue">javascript</span></div>
+							<div style="margin-bottom:.5em">Une abstraction de la plate forme</div>
+							<div>Les composants natifs directement accessibles dans le code en <span style="color:blue">javascript</span> </div>
+						</div>
+					</section>
+
+					<section>
+						<div>
+							<div style="margin-bottom:.5em">Le langage utilisé</div>
+							<div style="color:blue">#jeviensduweb</div>
+						</div>
+					</section>
+
+					<section>
+						<div>
+									
+									<pre style="font-size:.4em;"><code>
+
+<span style="color:blue">var</span> createViewModel = require(<span style="color:red">"./main-view-model"</span>).createViewModel;
+
+<span style="color:blue">function</span> onNavigatingTo(args) {
+    <span style="color:blue">var</span> page = args.object;
+    page.bindingContext = createViewModel();
+}
+exports.onNavigatingTo = onNavigatingTo;
+									</code></pre>
+
+									<!-- <pre style="font-size:.4em;"><code>
+
+var GroceryListViewModel = require("../../shared/view-models/grocery-list-view-model");
+
+var pageData = new Observable({
+
+    groceryList: new ObservableArray([
+
+        { name: "eggs" },
+        { name: "bread" },
+        { name: "cereal" }
+    ])
+});
+
+var groceryList = new GroceryListViewModel([]);
+
+var pageData = new Observable({
+
+    groceryList: groceryList
+});
+									</code></pre> -->
+
+						</div>
+					</section>
+
+					<section>
+						<div>
+									<pre style="font-size:.4em;color:red"><code>
+
+&lt;Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo"&gt;
+  &lt;StackLayout&gt;
+    &lt;Label <span style="color:blue">text="Tap the button" class="title"</span> /&gt;
+    &lt;Button <span style="color:blue">text="TAP" tap="{{ onTap }}"</span> /&gt;
+    &lt;Label <span style="color:blue">text="{{ message }}" class="message" textWrap="true"</span> /&gt;
+  &lt;/StackLayout&gt;
+&lt;/Page&gt;
+
+	</code></pre>
+
+						</div>
+					</section>
+
+					<section>
+						<div>
+									<pre style="font-size:.4em;color:blue"><code>
+
+.message {
+    <span style="color:red">font-size</span>: 20;
+    <span style="color:red">color</span>: #284848;
+    <span style="color:red">horizontal-align</span>: center;
+    <span style="color:red">margin</span>: 0 20;
+    <span style="color:red">text-align</span>: center;
+}
+
+
+	</code></pre>
+
+						</div>
+					</section>
+
+					<section>
+						<div>
+							<div style="margin-bottom:.5em">L'abstraction de la plate forme</div>
+							<div style="color:blue">#simplicité</div>
+						</div>
+					</section>
+
+
+					<section>
+						<div>
+									<pre style="font-size:.4em;color:red"><code>
+
+&lt;Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo"&gt;
+  &lt;StackLayout&gt;
+    &lt;Label <span style="color:blue">text="Hello world"</span> /&gt;
+  &lt;/StackLayout&gt;
+&lt;/Page&gt;
+
+	</code></pre>
+
+						</div>
+					</section>
+
+
+					<section>
+									<pre style="font-size:.4em;"><code>
+
+	<span style="color:blue">var</span> pagesModule = require(<span style="color:red">"ui/page"</span>);
+	<span style="color:blue">var</span> labelModule = require(<span style="color:red">"ui/label"</span>);
+	<span style="color:blue">function</span> createPage() {
+	    <span style="color:blue">var</span> label = <span style="color:blue">new</span> labelModule.Label();
+	    label.text = <span style="color:red">"Hello, world!"</span>;
+	    <span style="color:blue">var</span> page = <span style="color:blue">new</span> pagesModule.Page();
+	    page.content = label;
+	    <span style="color:blue">return</span> page;
+	}
+	exports.createPage = createPage;
+									</code></pre>
+					</section>
+
+					<section>
+						<div>
+									<pre style="font-size:.4em;color:red"><code>
+
+
+    &lt;Label <span style="color:blue">text="Alii nullo quaerente vultus severitate adsimulata"</span> /&gt;
+
+	</code></pre>
+
+						</div>
+						<div style="text-align:center">
+				            <div style="display:inline-block;vertical-align:top;">
+				                <img width="200" src="./img/and-lab.png" style="border:none;box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);">
+				                <div style="font-size:.6em;color:blue">android.widget.TextView</div>
+				            </div>
+				            <div style="display:inline-block;vertical-align:top;">
+				                <img width="200" src="./img/ios-lab.png" style="border:none;box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);">
+				                <div style="font-size:.6em;color:blue">UILabel</div>
+				            </div>
+				        </div>
+					</section>
+
+					<section>
+						<div>
+							<div>Les composants natifs directement accessibles en javascript</div>
+							<div style="color:blue">#souplesse #simplicité #jevienstoujoursduweb</div>
+						</div>
+					</section>
+
+					<section>
+									<pre style="font-size:.4em;"><code>
+
+	<span style="color:blue">var</span> pagesModule = require(<span style="color:red">"ui/page"</span>);
+	<span style="color:blue">var</span> labelModule = require(<span style="color:red">"ui/label"</span>);
+	<span style="color:blue">function</span> createPage() {
+	    <span style="color:blue">var</span> label = <span style="color:blue">new</span> labelModule.Label();
+	    label.text = <span style="color:red">"Hello, world!"</span>;
+	    <span style="color:blue">var</span> page = <span style="color:blue">new</span> pagesModule.Page();
+	    page.content = label;
+	    <span style="color:blue">return</span> page;
+	}
+	exports.createPage = createPage;
+									</code></pre>
+					</section>
+
+
+					<section>
+									<pre style="font-size:.4em;"><code>
+
+	<span style="color:blue">var</span> pagesModule = require(<span style="color:red">"ui/page"</span>);
+	<span style="color:blue">var</span> labelModule = require(<span style="color:red">"ui/label"</span>);
+	<span style="color:blue">var</span> device = require(<span style="color:red">"platform"</span>).device;
+	<span style="color:blue">function</span> createPage() {
+	    <span style="color:blue">if</span> (device.os === <span style="color:red">"iOS"</span>) {
+	        <span style="color:blue">var</span> label = <span style="color:blue">new</span> UILabel();
+	        label.text = <span style="color:red">"Hello, world!"</span>;
+	    }
+	    <span style="color:blue">var</span> page = <span style="color:blue">new</span> pagesModule.Page();
+	    page.content = label;
+	    <span style="color:blue">return</span> page;
+	}
+	exports.createPage = createPage;
+									</code></pre>
+					</section>
+
+				</section>
+
+
+				<section>
+					
+					<section>
+
+						<img height="300"  style="border:none;box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);" src="./img/nswork.png">
+						<h3>Un projet Nativescript</h3>
+						<div>A quoi ça ressemble ?</div>
+					</section>
+					
+					<section>
+						<div style="text-align:left">les commandes habituelles : </div>
+						<div>
+							<pre style="background:black;color:white">
+								
+ &gt; tns create mon-appli
+							</pre>
+
+							<pre style="background:black;color:white">
+								
+ &gt; tns platform add ios
+							</pre>
+
+							<pre style="background:black;color:white">
+								
+ &gt; tns platform add android
+							</pre>
+
+							<pre style="background:black;color:white">
+								
+ &gt; tns run ios --emulator
+							</pre>
+
+							<pre style="background:black;color:white">
+								
+ &gt; tns run android --emulator
+							</pre>
+						</div>
+					</section>
+
+					<section>
+						<div>
+							<pre>
+.
+└── sample-Groceries
+    ├── app
+    │   └── ...
+    ├── node_modules
+    │   └── tns-core-modules
+    ├── package.json
+    └── platforms
+        ├── android
+        └── ios
+							</pre>
+						</div>
+					</section>
+
+					<section>			
+						<div>
+
+						<pre style="background:black;color:white">
+									
+	 &gt; tns create my-app-name --template the-template-name
+								</pre>
+							</div>
+						</section>
+
+				</section>
+
+
+
+
+
+					<section>
+						<div>Now ...</div>
+						<img width="300" style="border:0;margin:0;    box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);" src="./img/ldc.png">
+					</section>
+
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

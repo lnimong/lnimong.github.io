@@ -1,0 +1,89 @@
+{ 
+    "data" : {
+        "publications" : [{
+            "id" : 1,
+            "title" : "première publication",
+            "subtitle" : "première publication (sous-titre)",
+            "author" : "me",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 2,
+            "title" : "deuxième publication",
+            "subtitle" : "deuxième publication (sous-titre)",
+            "author" : "me",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 3,
+            "title" : "troisième publication",
+            "subtitle" : "troisième publication (sous-titre)",
+            "author" : "me",
+            "theme":"Trade Idea",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 5,
+            "title" : "quatrième publication",
+            "subtitle" : "quatrième publication (sous-titre)",
+            "author" : "me",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 6,
+            "title" : "cinquième publication",
+            "subtitle" : "cinquième publication (sous-titre)",
+            "author" : "me",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 7,
+            "title" : "sixième publication",
+            "subtitle" : "sixième publication (sous-titre)",
+            "author" : "me",
+            "theme":"Trade Idea",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 13,
+            "title" : "septieme publication",
+            "subtitle" : "septieme publication (sous-titre)",
+            "author" : "me",
+            "theme":"Trade Idea",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 15,
+            "title" : "huitieme publication",
+            "subtitle" : "huitieme publication (sous-titre)",
+            "author" : "me",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 16,
+            "title" : "neuvieme publication",
+            "subtitle" : "neuvieme publication (sous-titre)",
+            "author" : "him",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 17,
+            "title" : "dixième publication",
+            "subtitle" : "dixième publication (sous-titre)",
+            "author" : "me",
+            "theme":"Trade Idea",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 10,
+            "title" : "onzieme publication",
+            "subtitle" : "onzieme publication (sous-titre)",
+            "author" : "him",
+            "theme":"Research",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        },{
+            "id" : 20,
+            "title" : "douzieme publication",
+            "subtitle" : "douzieme publication (sous-titre)",
+            "author" : "me",
+            "theme":"Trade Idea",
+            "summary" : "ideoque rector provinciae tunc pater Apollinaris eiusdem nominis ut conscius ductus est aliique congregati sunt ex diversis"
+        }]
+    } 
+}

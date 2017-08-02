@@ -1,0 +1,108 @@
+<html>
+<head>
+    <style type="text/css">
+        div {
+            border: solid black 1px;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.3em;
+        }
+
+        .selected {
+            color:blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/javascript" src="../react/react.js"></script>
+    <script type="text/javascript" src="../react/JSXTransformer.js"></script>
+    <script type="text/jsx">    
+
+    var scoreOf = {};
+    var scoreIs = function(point) {
+        return function (letter) {
+            scoreOf[letter] = point;
+        };
+    };
+    var letters = ['Y','Z','Q','O','R','K','W','X','H','V','G','I','L','P','S','T','U','F','A','E','D','N','B','C','M','J'];
+    ['A','E','I','L','N','O','R','S','T','U'].forEach(scoreIs(1));
+    ['D','M','G'].forEach(scoreIs(2));
+    ['B','C','P'].forEach(scoreIs(3));
+    ['F','H','V'].forEach(scoreIs(4));
+    ['J','Q'].forEach(scoreIs(8));
+    ['K','W','X','Y','Z'].forEach(scoreIs(10));
+            
+
+
+    var Tree =  React.createClass({
+        render : function () {
+            return (<div>
+                <Letters onLetterSelected={this.selectLetter}/>
+                <Score letter={this.state.letter}/>
+            </div>);
+        },
+
+        getInitialState : function() {
+            return{
+                letter : ''
+            }
+        },
+
+        selectLetter : function (newLetter) {
+            return this.setState({letter : newLetter});
+        }
+    });
+
+    var Letters = React.createClass({
+
+        render : function () {
+            var handler = this.props.onLetterSelected;
+
+            return (<div>
+                {letters.map(function(item) {
+                    return <Letter itemValue={item} whenClick={handler} />;
+                })}
+            </div>);
+        },
+
+    });
+
+    var Letter = React.createClass({
+
+        render : function () {
+            var classname = this.state.selected ? 'selected' : '';
+            return (<div className={classname} onClick={this.handleClick}>{this.props.itemValue}</div>);
+        },
+
+        getInitialState : function () {
+            return {selected : false };
+        },
+
+        handleClick : function () {
+            this.props.whenClick(this.props.itemValue);
+            this.setState({selected : true});
+        }
+    });
+              
+
+    var Score = React.createClass({
+
+        render : function () {
+            return (<div>
+                la lettre {this.props.letter} vaut {scoreOf[this.props.letter]} pts
+            </div>);
+        },
+
+    });
+
+
+    React.render(<Tree />, document.getElementById('root'));
+
+    </script>
+</body>
+</html>

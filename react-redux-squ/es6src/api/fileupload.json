@@ -1,0 +1,56 @@
+{
+    "data" : {
+
+        "match" :[
+            { "refId" : 1, "refName" : "MARQUE", "fileSource" : "brand"},
+            { "refId" : 2, "refName" : "Désignation article du fournisseur", "fileSource" : "product"},
+            { "refId" : 3, "refName" : "Référence article fournisseur", "fileSource" : "product"},
+            { "refId" : 4, "refName" : "Modèle", "fileSource" : "brand"},
+            { "refId" : 5, "refName" : "EAN13 – CAB", "fileSource" : "brand"},
+            { "refId" : 6, "refName" : "Référence couleur Fournisseur", "fileSource" : "couleur"},
+            { "refId" : 7, "refName" : "Référence couleur", "fileSource" : "couleur"}
+        ], 
+
+        "columnsfile" : [
+        { 
+            "id":100, 
+            "name" : "brand" , 
+            "sample" : [
+                "marque 1",
+                "valeur date 2",
+                "valeur entiere 3",
+                "valeur chaine 4"
+            ]
+        },
+        { 
+            "id":200, 
+            "name" : "couleur" , 
+            "sample" : [
+                "valeur entiere 1",
+                "valeur date 2",
+                "valeur entiere 3",
+                "valeur chaine 4"
+            ]
+        },
+        { 
+            "id":300, 
+            "name" : "product" , 
+            "sample" : [
+                "valeur entiere 1",
+                "valeur entiere 2",
+                "valeur entiere 3",
+                "valeur entiere 4"
+            ]
+        },
+        { 
+            "id":400, 
+            "name" : "categorie" , 
+            "sample" : [
+                "valeur chaine 1",
+                "valeur chaine 2",
+                "valeur chaine 3",
+                "valeur chaine 4"
+            ]
+        }
+    ]}
+}

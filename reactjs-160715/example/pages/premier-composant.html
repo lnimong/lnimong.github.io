@@ -1,0 +1,28 @@
+<html>
+<head>
+    <style type="text/css">
+        div {
+            border: solid black 1px;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/javascript" src="../react/react.js"></script>
+    <script type="text/javascript" src="../react/JSXTransformer.js"></script>
+    <script type="text/jsx">    
+
+
+    var component =  <div className="div-class" >hello<div>toto</div></div>;
+    React.render(component, document.getElementById('root'));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+.opened #header {
+
+    width: 230px;
+}
+
+.opened #content {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 300px);
+    opacity: 1;
+    margin-left: 0;
+} 
+.opened #content:before {
+    content: ''
+} 
+.opened .curtain-button.close {
+    opacity: 1;
+            width: 65px;
+            height: 65px;
+}
+.opened .curtain-button.open {
+    display: none;
+
+}
+
+.opened #nav {
+    padding: 10px;
+}
+
+.opened #nav span{
+    display: inline-block;
+    padding: 10px;
+    font-size: 22px;
+    color:#ccc;
+    cursor:pointer;
+}
+
+.opened #content>div {
+    padding: 30px
+}
+
+.opened .my-avatar {    
+    width: 200px;
+    height: 200px;
+}
+
+.opened  .robot {
+
+    opacity: 0;
+}

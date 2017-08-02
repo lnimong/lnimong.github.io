@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" href="/w/font-awesome-4.6.3/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/w/base.css">
+      <link rel="stylesheet" href="/w/opened.css">
+    <title>lionel nimong</title>
+
+    
+    <script>
+
+        var documentModule = (function (doc) {
+
+            var writing = null
+
+            var handlers = {
+
+                open : function () {
+
+                    doc.body.className = 'opened'
+                    writing.stop();   
+                },
+
+                close : function () {
+
+                    doc.body.className = ''
+                    writing.start();   
+                },
+
+                introReceived : function (text2write)  {
+
+                    writing = writer(function () {return doc.getElementById("autowrite")}, text2write)
+                    writing.start();    
+                }
+            }
+
+            return function (act, option) {
+
+                if(handlers[act]) handlers[act] (option)
+            }
+        });
+
+        var documentTemplatesModule = (function (doc) {
+
+            var display = function (templateId) {
+
+                return function (items) {
+
+                    var html = doc.getElementById(templateId).innerHTML
+                    var result = ''
+
+                    for(var i = 0;  i < items.length; ++i) {
+                        var itemhtml = html
+                        for(var prop in items[i]) {
+
+                            var value = items[i][prop]
+
+                            itemhtml = itemhtml.replace('['+prop+']', value)
+
+                            var reg = new RegExp("\\[temp (.+) in "+prop+"\\](.+)\\[temp\\]");
+                            var matches = itemhtml.match(reg)
+                            
+                            while(matches !== null) {
+
+                                var subresult = ''
+                                
+                                for(var j = 0; j < value.length; j ++) {
+
+                                    subresult += matches[2].replace('['+matches[1]+']', value[j])
+                                }
+
+                                itemhtml = itemhtml.replace(matches[0], subresult)
+
+                                matches = itemhtml.match(reg)
+                            }
+                            
+                        }
+                        result += itemhtml
+                    }
+                    
+                    doc.getElementById("display-items").innerHTML = 
+                        result.replace(/\[temp (.+) in (.+)\](.+)\[temp\]/, '').replace(/\[(.+)\]/, '')
+                }
+            }
+
+            var handlers = {
+
+                articlesReceived : function (items) {
+                 
+                    display ("article-template") (items.sort(function (b,a) {
+                        return a.date.localeCompare(b.date)
+                    }))
+                }
+            }
+
+            return function (act, opt) {
+
+                if(handlers[act]) handlers[act] (opt)
+            }
+        });
+
+        var handler = (function (modules) {
+
+            return function (act, options) {
+
+                for (var i = 0; i <modules.length; ++i) {
+
+                    modules[i] (act, options)
+                }
+            }
+        });
+
+        var asyncHandler = (function (do_) {
+
+            return function (url, act, option) {
+                fetch(url).then(function(result){
+                    if(option && option.usejson) {
+                        return result.json().then (function (json) {
+                            do_(act, json)
+                        })
+                    }
+                    else {
+                        return result.text().then (function (json) {
+                            do_(act, json)
+                        })
+                    }
+                })
+            }
+        });
+
+        var App = function (Do, Call) {
+
+            return {
+
+                _do : function (act, option) {
+                    Do(act, option)
+                    return App (Do, Call)
+                },
+
+                _call : function (url, act, option) {
+                    Call(url, act, option)
+                    return App (Do, Call)
+                },
+            }
+        }
+
+
+        var h = handler ([documentModule(document), documentTemplatesModule(document)])
+        window.app = App (h, asyncHandler(h))
+
+        var writer = function (element, text) {
+
+            var fulltext = text 
+
+            var curs = 0
+            var ticks = 0
+            var wait = 0
+            var _interval = null
+
+            return {
+
+                stop : function () {
+
+                    curs = 0
+                    ticks = 0
+                    wait = 0
+
+                    clearInterval(_interval)
+
+                    _interval = null
+                },
+
+                start : function () {
+
+                    var autowrite = element().innerHTML = '';
+
+                    _interval = setInterval(function(){ 
+
+                        if(wait > 0) {
+                            wait --;
+                            return;
+                        }
+                        
+                        var c = fulltext.charAt(curs)
+                        
+                        var autowrite = element().innerHTML
+                        if(c !== '\n' && curs < fulltext.length ) {
+                            element().innerHTML += c
+                            curs++
+                            wait = (fulltext.charAt(curs) === '\n' || curs >= fulltext.length)? 10 : 2 
+                        } else if(autowrite !== '' || curs >= fulltext.length) {
+                            var newstr = autowrite.substring(0, autowrite.length - 1)
+                            element().innerHTML = newstr
+                            if(newstr === ''){
+                                curs++
+                                if(curs >= fulltext.length) curs = 0 
+                            } 
+                        }
+                    }, 50)
+                }
+            };
+        }
+
+
+    </script>
+
+  </head>
+  <body class="" onload="app._call('/w/api/intro.txt', 'introReceived')" >
+      <header id="header">
+          
+        <div>
+            <div>
+                <div>
+                    <br>
+                    <img class="my-avatar" src="/w/img/avatar.jpg" />
+
+                </div>
+                <div class="my-socials">
+
+                    <a href="https://twitter.com/lionelthemonk" target="_blank">
+                        <i class="fa fa-twitter fa-lg"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/lionel-nimong-46748714" target="_blank" >
+                        <i class="fa fa-linkedin fa-lg"></i>
+                    </a>
+
+                    <a href="https://github.com/lnimong?tab=repositories" target="_blank">
+                        <i class="fa fa-github fa-lg"></i>
+                    </a>
+
+                </div>
+                <div class="robot"><span class="input" id="autowrite" ></span><span class="blink_me cursor"></span></div>
+                <div class="curtain-button open blink_me" onclick="app._call('/w/api/articles.json', 'articlesReceived', {usejson:true})._do('open')">
+                    <i class="fa fa-arrow-circle-o-left fa-lg"></i>
+                </div>
+                <div class="curtain-button close" onclick="app._do('close')">
+                    <i class="fa fa-arrow-circle-o-right fa-lg"></i>
+                </div>
+            </div>
+        </div>
+      </header>
+
+      <div id="content">
+          <nav id="nav"><span>ARTICLES</span></nav>
+
+        <script id="article-template" type="text/html">
+            <div class="article">
+                <div class="title"><a href="[url]" target="_blank">[title]</a></div>
+                <div class="desc">[desc]</div>
+                <div class="tags">[temp tag in tags]<span>[tag]</span>[temp]</div>
+            </div>
+        </script>
+
+          <div id="display-items">
+          </div>
+      </div>
+          
+  </body>
+</html>

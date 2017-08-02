@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+
+			.language-js {
+				color : white;
+				background: black;
+			}
+
+			.language-js .token.number {
+				color: beige
+			}
+
+			.language-js .token.keyword {
+				color: lightblue
+			}
+
+			.language-js .token.comment {
+				color: lightgreen
+			}
+		</style>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<img style="vertical-align:top;border:none;box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);"  src="./img/now-this.png">
+					</section>
+				</section>
+
+				<section>
+					
+					<section>
+						<h2>Dans le contexte global</h2>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>document <span class="token operator">===</span> document<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+
+<span class="token comment" spellcheck="true">// Si l'environnement de script est un navigateur,</span>
+<span class="token comment" spellcheck="true">// l'objet window sera l'objet global</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">===</span> window<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+
+<span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">37</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 37</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code>
+						</pre>
+					</section>
+
+				</section>
+
+				<section>
+					
+					<section>
+						<h2>Dans le contexte d'une fonction</h2>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// Dans un navigateur</span>
+<span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> window<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// objet global</span>
+
+<span class="token comment" spellcheck="true">// Côté serveur (ex. Node)</span>
+<span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> global<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token string">"use strict"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// on utilise le mode strict</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> undefined<span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+				</section>
+
+
+				<section>
+					
+					<section>
+						<h2>call et apply</h2>
+					</section>
+
+					<section>
+						<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token comment" spellcheck="true">// Un objet peut être passé en premier argumen</span>
+<span class="token comment" spellcheck="true">// de call ou de apply</span>
+<span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token string">"Toto"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Ici, on définit une propriété sur l'objet</span>
+<span class="token comment" spellcheck="true">// global</span>
+<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">"Global"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">whatsThis</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// La valeur de this ici dépend de la façon</span>
+  <span class="token comment" spellcheck="true">// dont la fonction est appelée</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+
+<span class="token function">whatsThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// "Global"</span>
+whatsThis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// "Toto"</span>
+whatsThis<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// "Toto"</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">ajout</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>b <span class="token operator">+</span> c <span class="token operator">+</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token punctuation">{</span>a<span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">,</span> b<span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Le premier paramètre correspond à l'objet qu'on souhaite</span>
+<span class="token comment" spellcheck="true">// lier à 'this', les paramètres suivants sont les arguments</span>
+<span class="token comment" spellcheck="true">// à utiliser dans l'appel de la fonction</span>
+ajout<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>o<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1 + 3 + 5 + 7 = 16</span>
+
+<span class="token comment" spellcheck="true">// Le premier paramètre correspond à l'objet qu'on souhaite</span>
+<span class="token comment" spellcheck="true">// lier à 'this', le second paramètre est le tableau dont les</span>
+<span class="token comment" spellcheck="true">// les éléments sont les arguments à passer à la fonction</span>
+ajout<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>o<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1 + 3 + 10 + 20 = 34</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">truc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>toString<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+truc<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// [object Number]</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>La méthode bind</h2>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> g <span class="token operator">=</span> f<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token punctuation">{</span>a<span class="token punctuation">:</span><span class="token string">"azerty"</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// azerty</span>
+
+<span class="token keyword">var</span> h <span class="token operator">=</span> g<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token punctuation">{</span>a<span class="token punctuation">:</span><span class="token string">"coucou"</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// bind ne fonctionne qu'une seule fois</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">h</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// azerty</span>
+
+<span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token punctuation">{</span>a<span class="token punctuation">:</span><span class="token number">37</span><span class="token punctuation">,</span> f<span class="token punctuation">:</span>f<span class="token punctuation">,</span> g<span class="token punctuation">:</span>g<span class="token punctuation">,</span> h<span class="token punctuation">:</span>h<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> o<span class="token punctuation">.</span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> o<span class="token punctuation">.</span><span class="token function">h</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 37, azerty, azerty</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Les arrow function</h2>
+					</section>
+
+					<section>
+						<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> objetGlobal <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> toto <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">toto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> objetGlobal<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span><span class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token comment" spellcheck="true">// Appelé comme la méthode d'un objet</span>
+<span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span>toto<span class="token punctuation">:</span> toto<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">toto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> objetGlobal<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+
+<span class="token comment" spellcheck="true">// Ici on utilise call</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>toto<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token operator">===</span> objetGlobal<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="token comment" spellcheck="true">// Là on utilise bind</span>
+toto <span class="token operator">=</span> toto<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">toto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> objetGlobal<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token comment" spellcheck="true">// On crée un objet obj qui a une méthode truc </span>
+<span class="token comment" spellcheck="true">// qui renvoie une fonction (fléchée) qui renvoie la valeur de this.</span>
+<span class="token comment" spellcheck="true">// this est donc fixé de façon permanente avec la valeur </span>
+<span class="token comment" spellcheck="true">// de this du contexte englobant.</span>
+<span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span> truc <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">var</span> x <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+                  <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// On appelle truc comme une méthode d'obj, this </span>
+<span class="token comment" spellcheck="true">// vaudra donc obj. On récupère la fonction </span>
+<span class="token comment" spellcheck="true">// renvoyée par truc et on en stocke une référence avec la variable fn</span>
+<span class="token keyword">var</span> fn <span class="token operator">=</span> obj<span class="token punctuation">.</span><span class="token function">truc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> obj<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>En tant que méthode d'un objet</h2>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token punctuation">{</span>
+  prop<span class="token punctuation">:</span> <span class="token number">37</span><span class="token punctuation">,</span>
+  f<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>prop<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// affiche 37</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token punctuation">{</span>prop<span class="token punctuation">:</span> <span class="token number">37</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">indépendante</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>prop<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+o<span class="token punctuation">.</span>f <span class="token operator">=</span> indépendante<span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// affiche 37</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js">o<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token punctuation">{</span>g<span class="token punctuation">:</span> indépendante<span class="token punctuation">,</span> prop<span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span>b<span class="token punctuation">.</span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// logs 42</span><span class="line-numbers-rows"><span></span><span></span></span></code></pre>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>le prototypage</h2>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token punctuation">{</span>f<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>b<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> p <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">;</span>
+p<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+p<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 5</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+
+					<section>
+						<pre class="brush:js line-numbers  language-js"><code class=" language-js">
+<span class="token keyword">function</span> <span class="token function">C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">37</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// logs 37</span>
+
+
+<span class="token keyword">function</span> <span class="token function">C2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">37</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>a<span class="token punctuation">:</span><span class="token number">38</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+o <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">C2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// logs 38</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+					</section>
+				</section>
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

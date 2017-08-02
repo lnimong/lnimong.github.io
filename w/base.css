@@ -1,0 +1,202 @@
+
+html {
+    height: 100%
+}
+
+        body, html{
+    margin: 0;
+    height: 100%;
+    padding: 0;
+        }
+
+
+#header {
+    height: 100%;
+    left: 0;
+    display:inline-block;
+    top: 0;
+    width: 100%;
+    -webkit-transition: width .5s  ;
+    -moz-transition: width .5s  ;
+    transition: width .5s  ;
+            text-align:center;
+}
+#header:before  {
+    content: '';
+    display: inline-block;
+    /*height: 100%;*/
+    vertical-align: middle;
+    }
+
+    #header>div {
+        display: inline-block;
+        
+    }
+
+    #header>div>div {
+		display: inline-block;
+    }
+
+        .my-avatar {    
+            width: 300px;
+            height: 300px;
+            border-radius: 200px;
+            border: 5px solid #777;
+                margin-bottom: 20px;
+                -webkit-transition: width .5s, height .5s  ;
+                -moz-transition: width .5s, height .5s  ;
+                transition: width .5s, height .5s  ;
+
+        }
+
+         a, 
+         a:hover, 
+         a:visited,
+         a:focus,
+         a:active {
+text-decoration: none;
+    outline: 0;
+        }
+
+        .my-socials a, 
+        .my-socials a:hover, 
+        .my-socials a:visited,
+        .my-socials a:focus,
+        .my-socials a:active {
+text-decoration: none;
+    color: #777;
+    display: inline-block;
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 24px;
+    outline: 0;
+        }
+
+        .my-socials a:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .my-socials a:hover {
+
+            font-size:30px;
+            transition :font-size .5s
+        }
+
+
+        .blink_me {
+        animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {  
+        50% { opacity: 0; }
+        }
+
+
+        .curtain-button {
+
+            display: inline-block;
+            font-size: 50px;
+            color: #ddd;
+            cursor:pointer;
+            -webkit-transition: color .5s  ;
+            -moz-transition: color .5s  ;
+            transition: color .5s  ;
+            width: 65px;
+            height: 65px;
+        }
+        .curtain-button:hover {
+            color: #aaa;
+        }
+
+        .curtain-button.close {
+            opacity: 0;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            padding-top: 5px;
+            -webkit-transition: color .5s, opacity .5s, width .5s, height .5s  ;
+            -moz-transition: color .5s, opacity .5s, width .5s, height .5s  ;
+            transition: color .5s, opacity .5s, width .5s, height .5s  ;
+        }
+
+        .curtain-button.open {
+            position: fixed;
+            margin-top:-100px;
+            right: 30px;
+        }
+        .curtain-button.open:hover {
+        animation: none;
+        }
+
+#content {
+    font-family: 'Open Sans Light',Helvetica,Arial,sans-serif;
+    display: none;
+}
+
+.div-template {
+    display: none
+}
+
+.article {
+
+    /*display: inline-block;*/
+    /*width: 200px;
+    height: 200px;*/
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  /*padding-bottom: 0;*/
+}
+
+.article a, 
+.article a:hover, 
+.article a:visited,
+.article a:focus,
+.article a:active {
+
+    text-decoration: none;
+    color: #777
+}
+
+.article .title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.article .desc {
+    color:#ddd
+}
+.article .tags span {
+    color:#fff;
+    background: #999;
+    margin-right: 10px;
+    padding: 5px;
+    display: inline-block
+}
+.article .tags {
+    margin-top: 10px;
+}
+
+.robot {
+
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+        font-family: Arial, sans-serif;
+            -webkit-transition: opacity .5s;
+            -moz-transition:  opacity .5s;
+            transition:  opacity .5s;
+}
+
+.robot .input {
+    color: #777;
+        font-family: Arial, sans-serif;
+}
+.robot .cursor {
+    border-right: 1px solid #777;
+    color: #777;
+}
+

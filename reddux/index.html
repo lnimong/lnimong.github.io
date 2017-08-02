@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="//cdn.muicss.com/mui-0.6.8/css/mui.min.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <style type="text/css">
+
+    html, body, #root, .c-root  {
+      margin:0;
+      padding:0;
+      width: 100%;
+      height: 100%;
+    }
+
+
+
+    .c-preview-layer {
+      height: 100%;
+      width: 100%;
+        background: black;
+        opacity: .2;
+    z-index: 10;
+    }
+
+    .c-preview {
+        background: white;
+        opacity: 1;
+        height: 100%;
+        width: 60%;
+        margin-left: -60%;
+        top: 0;
+        left: 0;
+        position : absolute;
+        transition: margin 2s;
+        -webkit-transition:margin 2s;
+        padding:15px
+    }
+
+    .c-preview-root {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display:none;
+    }
+
+    .c-root.with-preview {
+        overflow-y: hidden;
+    }
+    
+    .with-preview .c-preview {
+        margin-left: 0;
+    z-index: 20;
+    }
+    
+    .with-preview .c-preview-root {
+      display:block;
+    }
+
+    .c-super-header .mui-appbar table {
+      width:100%
+    }
+
+    .mui-appbar {
+      background:#212121;
+    }
+
+    .mui-appbar input {
+        color: white;
+        border-bottom-color: white;
+    }
+
+    .c-super-header .mui-textfield {
+        padding-top:0;
+        margin-bottom:0;
+    } 
+
+    .c-super-header .mui-appbar td {
+      text-align:right;
+    }
+
+    .c-super-header td.c-sg-logo {
+      text-align:left
+    }
+
+    .c-super-header td.c-search {
+      text-align:center;
+      padding:0 0 0 10%;
+      width:70%;
+    }
+
+    .c-super-header td.c-sg-logo img {
+      width : 40px
+    }
+
+    .c-super-header .mui-appbar td>span {
+      padding:10px;
+    }
+    
+    .c-publications-container {
+      text-align:center;
+
+    }
+
+    .c-publications-container .c-publications {
+      text-align: left;
+    }
+
+    .c-publications-container .c-publications .c-wall-item {
+    display: inline-block;
+    width: 217px;
+    margin: 5px;
+    }
+
+
+    .c-publications-container .c-publications .c-wall-item h4{
+      margin:0
+    }
+
+    .c-publications-container .c-publications .c-wall-item .c-theme {
+        font-weight: bold;
+        color: #aaa;
+        font-size: 12px;
+    }
+
+    .c-publications-container .c-publications .c-wall-item  .c-author {
+      color: #aaa;
+      font-size: 12px;
+      font-style: italic;
+    }
+
+    .c-publications-container .c-publications .c-wall-item  .c-summary{
+    padding: 15px 0;
+    text-align: justify;
+    color: #757575;
+
+    }
+
+    .c-publications-container .c-publications .c-wall-item .mui-panel {
+      margin-bottom : 0
+    } 
+
+    .c-publications-container .c-publications .c-wall-item .mui-panel .c-actions {
+      text-align:right
+    }
+
+    .c-publications-container .c-publications .c-wall-item .mui-panel .c-actions .mui-btn--fab {
+      z-index:0
+    }
+
+    .c-preview .c-close {
+      float: right;
+      display:none;
+    }
+
+
+    @media (max-width: 992px) {
+      .c-publications-container .c-publications .c-wall-item {
+      width: 47%;
+      }
+
+
+    }
+
+
+    @media (max-width: 1140px) {
+      
+      .c-preview {
+          width: 80%;
+          margin-left: -80%;
+      }
+
+
+    }
+
+    @media (max-width: 767px) {
+      .c-publications-container .c-publications .c-wall-item {
+      width: 100%;
+      margin: 5px 0
+      }
+
+    .c-friendly-name {
+      display:none 
+    }
+      .c-preview {
+          width: 100%;
+          margin-left: -100%;
+      }
+
+      .c-preview .c-close {
+        display:inline-block;
+      }
+
+
+
+    }
+
+    .c-loader {
+      padding-top:200px;
+      text-align:center;
+    }
+
+
+
+
+
+
+
+
+
+
+
+.spinner {
+  -webkit-animation: rotator 1.4s linear infinite;
+          animation: rotator 1.4s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+          animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+
+    </style>
+    <title>React redux example</title>
+  </head>
+  <body>
+
+    <div id="root"></div>
+    
+    <script src="./public/bundle.js"></script>
+  </body>
+</html>

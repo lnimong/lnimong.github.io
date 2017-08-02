@@ -1,0 +1,81 @@
+<html>
+<head>
+    <style type="text/css">
+        div {
+            border: solid black 1px;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/javascript" src="../react/react.js"></script>
+    <script type="text/javascript" src="../react/JSXTransformer.js"></script>
+    <script type="text/jsx">    
+
+    var scoreOf = {};
+    var scoreIs = function(point) {
+        return function (letter) {
+            scoreOf[letter] = point;
+        };
+    };
+
+    ['A','E','I','L','N','O','R','S','T','U'].forEach(scoreIs(1));
+    ['D','M','G'].forEach(scoreIs(2));
+    ['B','C','P'].forEach(scoreIs(3));
+    ['F','H','V'].forEach(scoreIs(4));
+    ['J','Q'].forEach(scoreIs(8));
+    ['K','W','X','Y','Z'].forEach(scoreIs(10));
+            
+
+    var ScoreCalculator = React.createClass({
+
+        render : function () {
+            var points = this.calculate(this.props.word.toUpperCase());
+            return (<div>
+                {points} pts
+            </div>);
+        },
+
+        calculate : function(word) {
+
+            var total = 0;
+
+            for (var i = 0;  i < word.length; i++) {
+                var letter = word.charAt(i);
+                if(scoreOf[letter]) total += scoreOf[letter];
+                else return -1;
+            };
+            return total;
+        }
+    });
+
+    var Tree =  React.createClass({
+        render : function () {
+            return (<div>
+                <input value={this.state.newWord} onChange={this.updateWord}/>
+                <ScoreCalculator word={this.state.newWord}/>
+            </div>);
+        },
+
+        getInitialState : function() {
+            return{
+                newWord : ''
+            }
+        },
+
+        updateWord : function (e) {
+            this.setState({newWord :  e.target.value})
+        }
+    });
+    React.render(<Tree />, document.getElementById('root'));
+
+    </script>
+</body>
+</html>

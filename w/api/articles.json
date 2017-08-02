@@ -1,0 +1,23 @@
+[
+    {
+        "date": "20150528",
+        "title" : "Il était une fois… Reactjs (Episode 1)",
+        "desc" : "Un article d'introduction à react, afin de se familiariser avec les notions de composants, classes de composants, d'état et de proprété",
+        "url" : "http://blog.cellenza.com/developpement-specifique/web-developpement-specifique/il-etait-une-fois-reactjs-episode-1/",
+        "tags": ["react", "web","javascript"]
+    },
+    {
+        "date": "20151103",
+        "title" : "Il était une fois… Reactjs (Episode 2)",
+        "desc" : "rappel sur les propriétés et l'état, et introduction de la notion de flux afin de gérer les intercation dans un arbre de composant un peu plus fourni",
+        "url" : "http://blog.cellenza.com/developpement-specifique/web-developpement-specifique/il-etait-une-fois-reactjs-episode-1-2/",
+        "tags": ["react", "web","javascript"]
+    },
+    {
+        "date": "20140603",
+        "title" : "Retour sur NCrafts / Event Sourcing et données polyglottes",
+        "desc" : "parlons un peu d'évènements, de bases de données, de sql, de no sql et d'autres trucs...",
+        "url" : "http://blog.cellenza.com/evenements/ncrafts-event-sourcing/",
+        "tags": ["data", "event sourcing","archi"]
+    }
+]

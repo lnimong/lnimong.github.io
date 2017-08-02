@@ -1,0 +1,353 @@
+<html>
+<head>
+    <style type="text/css">
+        div {
+            border: solid black 1px;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            vertical-align: top;
+        }
+
+        .user-tile {
+            width: 300px
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/javascript" src="../react/react.js"></script>
+    <script type="text/javascript" src="./jquery.js"></script>
+    <script type="text/javascript" src="../react/JSXTransformer.js"></script>
+    <script type="text/jsx">    
+
+    var PostRefreshContext = function () {
+
+        var updateCallback = [];
+        var createCallback = [];
+
+        this.update = function (user) {
+            for (var i = updateCallback.length - 1; i >= 0; i--) {
+                updateCallback[i] (user);
+            };
+        };
+        this.create = function (user) {
+            for (var i = createCallback.length - 1; i >= 0; i--) {
+                createCallback[i] (user);
+            };
+        };
+        this.whenUpdateUser = function (callback) {
+            updateCallback.push(callback);
+        };
+        this.whenCreateUser = function (callback) {
+            createCallback.push(callback);
+        };
+    };
+
+    var context = new PostRefreshContext();
+
+    var PostRefresh = React.createClass ({
+
+        render : function () {
+
+            var filter = this.state.filter.toLowerCase();
+            var filteredUsers = this.state.users.filter(function(user) {
+                if(user === null) return true;
+                return user.firstname.toLowerCase().match(filter) 
+                    || user.lastname.toLowerCase().match(filter) 
+                    || user.winlogin.toLowerCase().match(filter) 
+                    || user.email.toLowerCase().match(filter);
+            });
+
+
+            return (
+
+                <div>
+
+                    <div><input value={this.state.filter} onChange={this.changeFilter} /></div>
+
+                    <PostRefreshUsers users={filteredUsers} />
+
+                </div>
+            );
+        },
+
+        getInitialState : function () {
+            return {
+                filter : '',
+                users : []
+            }
+        },
+
+        componentDidMount : function () {
+            var component = this;
+            $.get('http://api.randomuser.me/', {results:52})
+             .done(function(fakeusers) {
+                component.setState({
+                    users : [null].concat(fakeusers.results.map(function(fake) {
+                        return {
+                            firstname : fake.user.name.first,
+                            lastname : fake.user.name.last,
+                            winlogin : fake.user.username,
+                            email : fake.user.email,
+                            id : fake.seed,
+                            closed : false
+                        };
+                    }))
+                });
+                context.whenCreateUser(function(user){
+                    component.setState({users : [null, user].concat(component.state.users)});
+                });
+             });
+
+
+        },
+
+        changeFilter: function(e) {
+            this.setState({filter : e.target.value});
+        },
+    });
+
+    var PostRefreshUsers =  React.createClass ({
+
+        render : function () {
+
+            return (
+                <div>
+                    {this.props.users.map(function(user) {
+                        return (<PostRefreshUser user={user} key={user === null ? '0' : user.id}/>);
+                    })}
+                </div>
+            )
+        }
+    });
+
+    var PostRefreshUser = React.createClass ({
+
+
+        render : function () {
+
+            return this.state.render(this);
+        },
+
+        display :  function (component) {
+
+            var user = this.state.user === null ? this.props.user : this.state.user;
+            if(user === null) return component.waitingForCreation(component);
+            if(user.closed) return component.closed(component);
+            var winlogin = user.winlogin;
+
+            return (
+            
+                <div className="user-tile">
+                    <div className="details">
+                        <div>{user.firstname}</div>
+                        <div>{user.lastname}</div>
+                        <div>{user.email}</div>
+                        <div>{winlogin}</div>
+                    </div>
+                    <div className="command">
+                        <span onClick={component.changeRender(component.confirmClose)}>close</span>
+                        <span>|</span>
+                        <span onClick={component.changeRender(component.editForUpdate)}>edit</span> 
+                    </div>
+                </div>
+            
+            )
+        },
+
+        editForUpdate :  function (component) {
+
+            var user = this.state.user === null ? this.props.user : this.state.user;
+            var winlogin = user.winlogin !== '' ? user.winlogin : 'no windows login';
+
+            return (
+            
+                <div className="user-tile">
+                    <div className="details">
+                        <div><input value={user.firstname} /></div>
+                        <div><input value={user.lastname} /></div>
+                        <div><input value={user.email} /></div>
+                        <div><input value={winlogin} /></div>
+                    </div>
+                    <div className="command">
+                        <span onClick={component.changeRender(component.display)}>cancel</span>
+                        <span>|</span>
+                        <span onClick={component.postUpdate(user)}>save</span> 
+                    </div>
+                </div>
+            
+            )
+        },
+
+
+        editForCreation :  function (component) {
+
+            var user = {
+                firstname : '',
+                lastname : '',
+                winlogin : '',
+                email : '',
+                id : '0',
+                closed : true
+            };
+
+            return (
+            
+                <div className="user-tile">
+                    <div className="details">
+                        <div><input value={user.firstname} /></div>
+                        <div><input value={user.lastname} /></div>
+                        <div><input value={user.email} /></div>
+                        <div><input value={user.winlogin} /></div>
+                    </div>
+                    <div className="command">
+                        <span onClick={component.changeRender(component.display)}>cancel</span>
+                        <span>|</span>
+                        <span onClick={component.postCreate(user)}>save</span> 
+                    </div>
+                </div>
+            
+            )
+        },
+
+        confirmClose :  function (component) {
+
+            var user = this.state.user === null ? this.props.user : this.state.user;
+
+            return (
+            
+                <div className="user-tile">
+                    <div className="details">
+                        <div>Are you sure you want to close this user ?</div>
+                        <span onClick={component.changeRender(component.display)}>no</span>
+                        <span>|</span>
+                        <span onClick={component.postClose(user)}>yes</span> 
+                    </div>
+                </div>
+            
+            )
+        },
+
+        closed :  function (component) {
+
+            var user = this.state.user === null ? this.props.user : this.state.user;
+
+            return (
+            
+                <div className="user-tile">
+                    <div className="details">
+                        <div>{user.firstname}</div>
+                        <div>{user.lastname}</div>
+                        <div>Closed</div>
+                    </div>
+                </div>
+            
+            );
+        },
+
+        waitingForCreation : function (component) {
+            return (
+            
+                <div className="user-tile">
+                    <div className="details">
+                        <div onClick={component.changeRender(component.editForCreation)}>New user</div>
+                    </div>
+                </div>
+            );
+              
+        },
+
+        getInitialState :  function () {
+            return {
+                render :  this.display,
+                user : null
+            }
+        },
+
+        changeRender : function(newrender) {
+            var component = this;
+            return function () {
+                component.setState({render : newrender})
+            }
+        }, 
+
+        postUpdate : function (user) {
+            var component = this;
+            return function () {
+
+                $
+                .get('http://api.randomuser.me/')
+                .done(function(fakeusers) {
+                    var users = fakeusers.results.map(function(fake) {
+                        return {
+                            firstname : fake.user.name.first,
+                            lastname : fake.user.name.last,
+                            winlogin : fake.user.username,
+                            email : fake.user.email,
+                            id : fake.seed,
+                            closed : false
+                        };
+                    });
+                    component.setState({user : users[0], render : component.display});
+                });
+            };
+        },
+
+
+        postCreate : function (user) {
+            var component = this;
+            return function () {
+
+                $
+                .get('http://api.randomuser.me/')
+                .done(function(fakeusers) {
+                    var users = fakeusers.results.map(function(fake) {
+                        return {
+                            firstname : fake.user.name.first,
+                            lastname : fake.user.name.last,
+                            winlogin : fake.user.username,
+                            email : fake.user.email,
+                            id : fake.seed,
+                            closed : false
+                        };
+                    });
+                    component.setState({user : users[0], render : component.display});
+                    context.create(users[0])
+                });
+            };
+        },
+
+        postClose : function (user) {
+            var component = this;
+            return function () {
+
+                $
+                .get('http://api.randomuser.me/')
+                .done(function(fakeusers) {
+                    var users = fakeusers.results.map(function(fake) {
+                        return {
+                            firstname : fake.user.name.first,
+                            lastname : fake.user.name.last,
+                            winlogin : fake.user.username,
+                            email : fake.user.email,
+                            id : fake.seed,
+                            closed : true
+                        };
+                    });
+                    component.setState({user : users[0], render : component.closed});
+                });
+            };
+        }
+    });
+
+    var component =  <PostRefresh />;
+    React.render(component, document.getElementById('root'));
+
+    </script>
+</body>
+</html>
