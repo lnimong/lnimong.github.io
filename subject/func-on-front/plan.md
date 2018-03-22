@@ -22,15 +22,40 @@
 * 2013 reactJs
 ### =>conclusion : on a une tonne de manières différentes de coder 
 
-
 ## la guerre des styles 
 * angular VS react ?
 * l'introduction du pattern flux avec redux (et donc un peu de fonctionctionnel)
-* angular VS react+Redux (objet VS fonctionnetl)
-* pourquoi react c'est mieux (nouveaumodele = fonction (modele, interction) et vue = fonction (modele)) => début de la "reactive programming"
+* angular VS react+Redux (objet VS fonctionnel)
 * react+redux : simplifie le code front, on a 0 intelligence, juste des fonction de transfo
 * angular : on a des factory et des services, concepts (SOLID) généralement utilisés pour encapsuler de l'intelligence => mal adapté
-### =>conclusion react est mieux adapté pour le front
+* pourquoi react c'est mieux (nouveaumodele = fonction (modele, interction) et vue = fonction (modele)) => début de la mode "reactive programming"
+### =>conclusion react a gagné
+
+## pourquoi react a gagné ? le style FRP
+* la mode de la reactive programming sur le front (rxjs, baconjs, reactjs, cyclejs)
+* *voir lequel est le premier et se renseigner sur les origines*
+* objectif du truc voir son appli comme un programme de traitement d'intéractions/évènements (ce qui est le cas et le réel objectif de toute application web moderne)
+* les streams/flux sont au centre lorsqu'on parle de reactive programming et généralement ce sont des flux d'interactions/evenement
+```
+Apps nowadays have an abundancy of real-time events of every kind that enable a highly interactive experience to the user. We need tools for properly dealing with that, and Reactive Programming is an answer
+```
+* en input on a un flux d'évènements en output on va avoir un autre flux (de commandes à faire)
+* traiter ça avec des factory, des services semble un peu complexe
+* le F de FRP : la prog fonctionnelle bien adaptée
+* partir du concept de RP, y ajouter les bases de prog fonctionnelle (map, reduce, pure fonction, immutabilité)
+* et voir son appli de la sorte :
+```
+let update accState event = ... state
+
+let stateToView state = ...view
+
+let myApp =  eventsStream |> (fold update initState) |> statetoView
+```
+* on a donc une appli qui va travailler avec un flux d'action...
+* marche très bien pour de l'UI
+* c'est ce que font toutes les applis react
+### => tous ceux qui font du react ont déjà un pied ds la PF
+
 
 ## les langages fonctionnels au front c'est pas nouveau
 * la source d'inspiration de redux : ELM
@@ -38,7 +63,7 @@
 * exemple de code
 ### =>conclusion: les petites différences sont pas mal quand même
 
-
+on 
 ## l'alternative fable
 * comment ça marche
 * avantages de elmish (branché à react)
