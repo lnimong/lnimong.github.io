@@ -40,6 +40,8 @@
 Apps nowadays have an abundancy of real-time events of every kind that enable a highly interactive experience to the user. We need tools for properly dealing with that, and Reactive Programming is an answer
 ```
 * en input on a un flux d'évènements en output on va avoir un autre flux (de commandes à faire)
+
+
 * traiter ça avec des factory, des services semble un peu complexe
 * le F de FRP : la prog fonctionnelle bien adaptée
 * partir du concept de RP, y ajouter les bases de prog fonctionnelle (map, reduce, pure fonction, immutabilité)
@@ -51,6 +53,16 @@ let stateToView state = ...view
 
 let myApp =  eventsStream |> (fold update initState) |> statetoView
 ```
+
+```
+//en français
+déroulement de mon appli :
+    etat = etatInitial
+    monApp = vue (etat)
+    pour chaque evenement de monFluxDevenement
+        etat = update (etat)
+        app = vue (etat)
+```
 * on a donc une appli qui va travailler avec un flux d'action...
 * marche très bien pour de l'UI
 * c'est ce que font toutes les applis react
@@ -59,7 +71,10 @@ let myApp =  eventsStream |> (fold update initState) |> statetoView
 
 ## les langages fonctionnels au front c'est pas nouveau
 * la source d'inspiration de redux : ELM
-* qu'est ce ce que c'est ?
+    *  https://redux.js.org/
+    * https://twitter.com/dan_abramov/status/645547278078451712?lang=fr
+* elm c'est un langage inspiré des langages de la famille [ML](https://fr.wikipedia.org/wiki/ML_(langage)) 
+
 * exemple de code
 ### =>conclusion: les petites différences sont pas mal quand même
 
