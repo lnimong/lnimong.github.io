@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>RevealJS : /Users/appleo/Desktop/prez.md</title>
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
+        
+       
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/Zenburn.css">
+
+        
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+          document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <style type="text/css">
+            @page {    
+              margin: 0;
+              size: auto; 
+            }
+        </style>
+
+        <script>
+         if(window.location.search.match( /print-pdf-now/gi )) {
+           window.print();
+         }
+      </script>
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+
+<img src="./fred.png" width="400" />
+
+</script></section><section ><section data-markdown><script type="text/template">
+<img src="./panic.png" width="400" />
+```html
+no more parenthesis !!! no more braces !!!!
+this will never work !!!!!
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let sumOf x y = x + y
+```
+
+```html
+way more natural reading
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let sumOf x y = x + y
+```
+
+```csharp
+int sumOf (int x, int y) {
+    return x + y
+}
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template">
+```html
+on the following code sample,
+where is the "function" ?
+where is the "parameter" ?
+```
+</script></section><section data-markdown><script type="text/template">
+```bash
+shell/script> cd a_directory
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+a function body will always be...
+```
+```html
+    either an expression
+    or a bloc
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let myFunction x y = 
+    let s = x + y
+    let pi = s%1 = 1
+    sprintf "%A" pi 
+```
+```html
+this is a bloc
+```
+</script></section><section data-markdown><script type="text/template">
+```csharp
+int myFunction (int x, int y) {
+    var s = x + y;
+    var pi = (s%1 == 1);
+    pi.ToString(); 
+}
+```
+```html
+braces don't improove readability 
+```
+```html
+indentations do
+```
+</script></section><section data-markdown><script type="text/template">
+![Image of Alinea](./alinea.png)
+```html
+you've always been using indentations
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let myFunction x y = 
+    let s = x + y
+    let pi = s%1 = 1
+    sprintf "%A" pi 
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template">
+```html
+what does the following code samples ?
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let rec myFunction n =
+   if n <= 2 then 1
+   else myFunction (n - 1) + myFunction (n - 2)
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+<img src="./fnotation.png" width="400" />
+
+```html
+functions functions functions...
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+the true purpose is not to put functions everywhere
+```
+```html
+we want a code with no inconsistency
+```
+</script></section><section data-markdown><script type="text/template">
+pure function 
+
+f (x) = 3x + 5
+</script></section><section data-markdown><script type="text/template">
+```html
+the result only depends on the parameters 
+```
+
+```html
+there is no side effet, 
+(any modification outside the context of th function
+like db update, IO...)
+```
+
+```html
+there is only one parameter and one output
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+every bloc must have a value
+```
+```html
+the "void" doesn't exist (it can lead to some inconsistencies)
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template">
+```html
+what does the following code samples ?
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let myFunction x y = 
+    let s = x + y
+    let pi = s%1 = 1
+    sprintf "%A" pi 
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let rec myFunction n =
+   if n <= 2 then 1
+   else myFunction (n - 1) + maFontion (n - 2)
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+type Dimension  = { length:int, width:int}
+
+let myFunction dim = 
+    dim.length = dim.width 
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+<img src="./chrono.png" width="400" />
+```html
+let's spend some time on type inference
+```
+</script></section><section data-markdown><script type="text/template">
+```csharp
+var d = new Dictionary<int, string>();
+```
+
+```html
+c# has type inference
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+
+type Dimension  = { length:int, width:int}
+
+let myFunction dim = 
+    dim.length = dim.width 
+```
+
+```html
+the f# compiler is just a bit smarter 
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let myFunction (a:string) =    
+    a.Length%2 = 1
+```
+
+```html
+but sometimes you have to help it
+```
+</script></section></section><section  data-markdown><script type="text/template">
+<img src="./arrows.png" width="400" />
+```html
+so many arrows...
+```
+</script></section><section ><section data-markdown><script type="text/template">
+<img src="./pattern.png" width="400" />
+```html
+this is a revolution : the pattern matching
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+this is a list
+```
+```fsharp
+let list = [ 1; 4; 6; 4] 
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let listMatcher aList = 
+    match aList with
+    | [] -> "this is an empty list" 
+    | [firstElement] -> "there is only one element in the list"
+    | [first; second] ->  "there are two elements in the list" 
+    | _ -> "there are more than two elements in the list"
+```
+```html
+every case represents a possible situation for a list
+```
+```html
+the order is important
+```
+```html
+works a bit like "destructuring" in javascript
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let listMatcher aList = 
+    match aList with
+    | [] -> 0
+    | [firstElement] -> firstElement
+    | [first; second] ->  first + second
+    | _ -> -1
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template">
+```html
+wwhat is the return type of the following function ?
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let listMatcher aList = 
+    match aList with
+    | [] -> "no element"
+    | [firstElement::rest] -> "at least one element"
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+what does the following code samples ?
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let rec myFunction aList = 
+    match aList with
+    | [] -> 0
+    | [_::rest] -> 1 + myFunction rest
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+<img src="./shapes.png" width="400" />
+```html
+algebraic types
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+type Shape = | Square | Rectangle | Circle
+```
+
+```fsharp
+type Shape = 
+    | Square of int
+    | Rectangle of int * int 
+    | Circle of int
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+type Shape = 
+    | Square of int
+    | Rectangle of int * int 
+    | Circle of int
+
+let myFunction shape = 
+    match shape with
+    | Square side -> side * side
+    | Rectangle length, width -> length * width
+    | Circle radius -> radius * radius * 3.14
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+maybe
+```
+<img src="./maybe.png" width="400" height="400" style="border-radius:400px" />
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+type Maybe<a'> = 
+    | Just of a'
+    | Nothing
+```
+
+```html
+an algebraic type
+```
+```html
+a generic/parameterized type
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+
+type Maybe<a'> = 
+    | Just of a'
+    | Nothing
+    
+let myFunction maybeValue = 
+    match maybeValue with
+    | Just value -> someOtherFunction value
+    | Nothing -> ...
+
+let a = Just 1
+myFunction a
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+"null" doesn't exist (it's an inconsistency)
+```
+</script></section><section data-markdown><script type="text/template">
+```html
+people often compare it to c# Nullable
+```
+```csharp
+int? a = null;
+
+int b = a.Value * 2 
+```
+```html
+it's possible to write that in c#
+you'll get an error at runtime 
+sometimes in your production environment
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+
+let a = Nothing
+
+let b = a * 2 !!!!!!!
+```
+```html
+you'll get a compilation error (in ocaml, haskel, elm, f#...)
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let a = Nothing
+
+let b = 
+    match a with 
+    | Just aNumber -> aNumber * 2
+    | Nothing -> ??
+```
+```html
+the only way to use it is throught pattern matching
+```
+```html
+you MUST handle the case of Nothing 
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template">
+```html
+what does the following code samples ?
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let myFunction  x y =
+    if y = 0 then Nothing else Just x/y
+```
+</script></section><section data-markdown><script type="text/template">
+
+```fsharp
+let myFunction  x y =
+    match x,y with 
+    | Nothing, _ -> Nothing 
+    | _, Nothing -> Nothing 
+    | _, Just 0 -> Nothing
+    | Just xValue, Just yValue -> Just xValue/yValue
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let myFunction  x y =
+    match x,y with 
+    | Nothing, _ | _, Nothing -> | _, Just 0 -> Nothing
+    | Just xValue, Just yValue -> Just xValue/yValue
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+<img src="./pipe.png" width="400" />
+```html
+is that a pipe ?
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template">
+```html
+what does the following code sample ?
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let guyInGoodForm = hungryGuy |> meal |> nap
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let guyInGoodForm = hungryGuy |> meal |> nap
+```
+```csharp
+var guyInGoodForm =  nap(meal(hungryGuy));
+```
+
+```html
+the first code is way more natural
+```
+</script></section><section data-markdown><script type="text/template">
+```bash
+shell/script> find . –name “*.mp3” | grep –i JayZ | grep –vi “mix”
+```
+
+```bash
+shell/script> ls *.txt | xargs cat >> all.txt
+```
+
+<br>
+```html
+you might have used pipe in other contexts
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let sumOf x y = x + y
+
+let add2 = sumOf 2
+
+let R =  5 |> add2
+```
+```html
+this technique is called "partial function application"
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let R =  5 |> add2
+```
+
+```fsharp
+let R =  add2 5
+```
+
+```fsharp
+let R =  5 |> sumOf 2
+```
+
+```fsharp
+let R = sumOf 2 5
+```
+
+```html
+a few differents ways of writing the same thing
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let sumOf x y = x + y
+```
+
+```html
+here we've created a function...
+-> which takes one parameter "x"
+-> then returns another function "F" 
+----> which takes another parameter "y"
+----> and which (F) returns the result
+```
+</script></section><section data-markdown><script type="text/template">
+```fsharp
+let sumOf x y = x + y
+
+let add1 = sumOf 1
+
+let list = [1; 2; 3; 4]
+
+let R =  
+    list 
+    |> List.filter (fun x -> x%2=1)
+    |> List.map add1
+    |> List.map (fun x -> x/2)
+```
+</script></section><section data-markdown><script type="text/template">
+<img src="./you.png" width="400" />
+</script></section><section data-markdown><script type="text/template"></script></section></section></div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+              { src: 'plugin/math/math.js', async: true }
+            ];
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default',
+              dependencies: deps
+            };
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+            var options = {
+  "notesSeparator": "note:",
+  "separator": "^[\r\n?|\n]---[\r\n?|\n]$",
+  "verticalSeparator": "^[\r\n?|\n]--[\r\n?|\n]$",
+  "theme": "black",
+  "highlightTheme": "Zenburn",
+  "controls": true,
+  "progress": true,
+  "slideNumber": false,
+  "history": true,
+  "keyboard": true,
+  "overview": true,
+  "center": true,
+  "touch": true,
+  "loop": false,
+  "rtl": false,
+  "shuffle": false,
+  "fragments": true,
+  "embedded": false,
+  "help": true,
+  "showNotes": false,
+  "autoSlide": 0,
+  "autoSlideStoppable": true,
+  "mouseWheel": false,
+  "hideAddressBar": true,
+  "previewLinks": false,
+  "transition": "default",
+  "transitionSpeed": "default",
+  "backgroundTransition": "default",
+  "viewDistance": 3,
+  "parallaxBackgroundImage": "",
+  "parallaxBackgroundSize": "",
+  "parallaxBackgroundHorizontal": null,
+  "parallaxBackgroundVertical": null,
+  "slideExplorerEnabled": true,
+  "browserPath": null,
+  "attributes": ""
+};
+            options = extend(defaultOptions, options, queryOptions);
+            Reveal.initialize(options);
+
+        </script>
+        
+    </body>
+</html>
