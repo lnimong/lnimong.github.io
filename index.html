@@ -9,62 +9,160 @@
     
     <script>
 
-        var documentModule = (function (doc) {
+        var moduleProcess =  
+            moduleHandlers => 
+                handlerAction => ( 
+                    (!!moduleHandlers[handlerAction]) 
+                    ? payload => moduleHandlers[handlerAction] (payload)
+                    : () => false
+                )
+        var cleanSort = comp => arr => arr.map(x => x).sort(comp)
 
-            var writing = null
+        var documentModule = doc => {
 
-            var handlers = {
+            let writing = null
 
-                open : function () {
+            let writer = (element, text) => {
 
-                    doc.body.className = 'opened'
+                let fulltext = text 
+
+                let curs = 0
+                let ticks = 0
+                let wait = 0
+                let _interval = null
+
+                return {
+
+                    stop : () => {
+
+                        curs = 0
+                        ticks = 0
+                        wait = 0
+
+                        clearInterval(_interval)
+
+                        _interval = null
+                    },
+
+                    start : () => {
+
+                        let autowrite = element().innerHTML = '';
+
+                        _interval = 
+                            setInterval(
+                                () => { 
+
+                                    if(wait > 0) {
+                                        wait --;
+                                        return;
+                                    }
+                                    
+                                    let c = fulltext.charAt(curs)
+                                    
+                                    let autowrite = element().innerHTML
+                                    if(c !== '\n' && curs < fulltext.length ) {
+                                        element().innerHTML += c
+                                        curs++
+                                        wait = (fulltext.charAt(curs) === '\n' || curs >= fulltext.length)? 10 : 2 
+                                    } else if(autowrite !== '' || curs >= fulltext.length) {
+                                        let newstr = autowrite.substring(0, autowrite.length - 1)
+                                        element().innerHTML = newstr
+                                        if(newstr === ''){
+                                            curs++
+                                            if(curs >= fulltext.length) curs = 0 
+                                        } 
+                                    }
+                                }, 
+                                50)
+                    }
+                };
+            }
+
+            let addClass = (classname) => (el) => {
+                el.className = [
+                    ...el.className
+                        .split(' ')
+                        .filter(x => x !== '' && x !== classname),
+                    classname
+                ].join(' ')
+            }
+            
+            let removeClass = (classname) => (el) => {
+                el.className = [
+                    ...el.className
+                        .split(' ')
+                        .filter(x => x !== '' && x !== classname)
+                ].join(' ')
+            }
+
+            let researchQuery = 
+                query => {
+                        
+                    let updateClass = 
+                        query !== ''
+                        ? addClass ('active-search') 
+                        : removeClass ('active-search')
+                    updateClass (doc.body)
+                }
+            
+            return {
+
+                open : () => {
+
+                    addClass ('opened') (doc.body)
                     writing.stop();   
                 },
 
-                close : function () {
+                close : () => {
 
-                    doc.body.className = ''
+                    removeClass ('opened') (doc.body)
                     writing.start();   
                 },
 
-                introReceived : function (text2write)  {
+                introReceived : text2write =>  {
 
-                    writing = writer(function () {return doc.getElementById("autowrite")}, text2write)
+                    writing = writer (
+                        () => doc.getElementById("autowrite"), 
+                        text2write
+                    )
                     writing.start();    
-                }
+                },
+
+                research : query =>  {
+                    researchQuery(query)
+                    doc.getElementById("search-input").value = query
+                },
+
+                researchText : 
+                    () => researchQuery (doc.getElementById("search-input").value),
             }
+        };
 
-            return function (act, option) {
+        var documentTemplatesModule = doc => {
 
-                if(handlers[act]) handlers[act] (option)
-            }
-        });
+            var generateInner = 
+                targetId => templateId => items => {
 
-        var documentTemplatesModule = (function (doc) {
+                    let html = doc.getElementById(templateId).innerHTML
+                    let result = ''
 
-            var display = function (templateId) {
+                    for(let i = 0;  i < items.length; ++i) {
+                        let itemhtml = html
+                        for(let prop in items[i]) {
 
-                return function (items) {
-
-                    var html = doc.getElementById(templateId).innerHTML
-                    var result = ''
-
-                    for(var i = 0;  i < items.length; ++i) {
-                        var itemhtml = html
-                        for(var prop in items[i]) {
-
-                            var value = items[i][prop]
+                            let value = items[i][prop]
 
                             itemhtml = itemhtml.replace('['+prop+']', value)
+                            itemhtml = itemhtml.replace('['+prop+']', value)
 
-                            var reg = new RegExp("\\[temp (.+) in "+prop+"\\](.+)\\[temp\\]");
-                            var matches = itemhtml.match(reg)
+                            let reg = new RegExp("\\[temp (.+) in "+prop+"\\](.+)\\[temp\\]");
+                            let matches = itemhtml.match(reg)
                             
                             while(matches !== null) {
 
-                                var subresult = ''
+                                let subresult = ''
                                 
-                                for(var j = 0; j < value.length; j ++) {
+                                for(let j = 0; j < value.length; j ++) {
 
                                     subresult += matches[2].replace('['+matches[1]+']', value[j])
                                 }
@@ -78,143 +176,211 @@
                         result += itemhtml
                     }
                     
-                    doc.getElementById("display-items").innerHTML = 
+                    doc.getElementById(targetId).innerHTML = 
                         result.replace(/\[temp (.+) in (.+)\](.+)\[temp\]/, '').replace(/\[(.+)\]/, '')
                 }
+            
+
+            return {
+
+                articlesReceived : 
+                    items => 
+                        generateInner ("display-items") ("article-template") (
+                            cleanSort 
+                                ((b,a) => a.date.localeCompare(b.date))
+                                (items)
+                        ),
+
+                mainTagsReady : 
+                    tags => 
+                        generateInner ("nav-tags") ("global-tags-template") (
+                            tags.map(tag => ({ tagname: tag }))
+                        )
+                
+            }
+        };
+
+        var searchModule = (doc, storage, { mainTagsReady, articlesReceived }) => {
+
+            let jsonStorage = {
+                save : (key, obj) => storage.setItem(key, JSON.stringify (obj)),
+                get : key => JSON.parse (storage.getItem(key)),
             }
 
-            var handlers = {
-
-                articlesReceived : function (items) {
-                 
-                    display ("article-template") (items.sort(function (b,a) {
-                        return a.date.localeCompare(b.date)
-                    }))
+            function objToAray(obj) {
+                let hasOwn = Object.prototype.hasOwnProperty;
+                let keys = [], name;
+                for (let name in obj) {
+                    if (hasOwn.call(obj, name)) {
+                        keys.push({ key:name, val:obj[name]});
+                    }
                 }
+                return keys;
             }
 
-            return function (act, opt) {
+            let buildIndex = 
+                items => 
+                    objToAray (
+                        cleanSort 
+                            ((b,a) => a.date.localeCompare(b.date))
+                            (items)
+                            .reduce(
+                                (tags, curr, ind) => ([
+                                    ...tags,
+                                    ...curr.tags.map(tag => ({ 
+                                        tag:tag.toLowerCase(), 
+                                        ind 
+                                    }))
+                                ]), 
+                                []
+                            )
+                            .reduce(
+                                (result, { tag, ind }) => ({
+                                    ...result,
+                                    [tag] : 
+                                        result[tag] && result[tag].length 
+                                        ? [ ...result[tag], ind ]
+                                        : [ind]
+                                }), 
+                                {}
+                            )
+                    ) 
+            
+            let researchQuery = 
+                query => {
+                    query = query.trim().toLowerCase()
 
-                if(handlers[act]) handlers[act] (opt)
-            }
-        });
+                    let index = jsonStorage.get("lni-index")
 
-        var handler = (function (modules) {
+                    let search = 
+                        searchFilter =>
+                            index.tags
+                                .filter(x => searchFilter(x.key))
+                                .map(x => x.val)
+                                .reduce((res, curr) => [...res, ...curr], [])
 
-            return function (act, options) {
+                    let results = 
+                        query === ""
+                        ? index.base    
+                        : [
+                            ...new Set (
+                                [
+                                    ...search (tag => tag == query),
+                                    ...search (tag => tag.includes(query)),
+                                ]
+                            )
+                        ].map(id => index.base[id])
 
-                for (var i = 0; i <modules.length; ++i) {
-
-                    modules[i] (act, options)
+                    articlesReceived (results)
                 }
+
+            return {
+
+                articlesReceived : items => {
+
+                    let tags = buildIndex (items)
+
+                    jsonStorage.save (
+                        "lni-index", 
+                        { base: items, tags }
+                    )
+
+                    mainTagsReady (
+                        cleanSort
+                            ((b,a) => a.val.length - b.val.length)
+                            (tags)
+                            .map(t => t.key)
+                    )
+                },
+
+                research : researchQuery,
+
+                researchText : 
+                    () => researchQuery (doc.getElementById("search-input").value)
+
             }
-        });
+
+        }
+
+
+        var handler = modules => (act, options) => {
+
+            for (var i = 0; i <modules.length; ++i) {
+
+                moduleProcess (modules[i]) (act) (options)
+            }
+        };
 
         var asyncHandler = (function (do_) {
 
             return function (url, act, option) {
-                fetch(url).then(function(result){
-                    if(option && option.usejson) {
-                        return result.json().then (function (json) {
+                fetch(url).then(
+                    result =>  
+                        (option && option.usejson)
+                        ? result.json().then (function (json) {
                             do_(act, json)
                         })
-                    }
-                    else {
-                        return result.text().then (function (json) {
-                            do_(act, json)
+                        : result.text().then (function (txt) {
+                            do_(act, txt)
                         })
-                    }
-                })
+                    )
             }
         });
 
-        var App = function (Do, Call) {
+        var App = (Do, Call) => ({
 
-            return {
+            _do : (act, payload) => 
+                    Do(act, payload) || App (Do, Call)
+            ,
 
-                _do : function (act, option) {
-                    Do(act, option)
-                    return App (Do, Call)
-                },
+            _call : (url, act, option) =>
+                Call(url, act, option) || App (Do, Call)
+            ,
+        })
 
-                _call : function (url, act, option) {
-                    Call(url, act, option)
-                    return App (Do, Call)
-                },
-            }
-        }
+        var h = handler ([
+            documentModule (document), 
+            documentTemplatesModule (document),
+            searchModule (document, sessionStorage, documentTemplatesModule (document))
+        ])
 
-
-        var h = handler ([documentModule(document), documentTemplatesModule(document)])
         window.app = App (h, asyncHandler(h))
 
-        var writer = function (element, text) {
+        window._loadIntro = () => 
+            window.app._call('/w/api/intro.txt', 'introReceived')
 
-            var fulltext = text 
-
-            var curs = 0
-            var ticks = 0
-            var wait = 0
-            var _interval = null
-
-            return {
-
-                stop : function () {
-
-                    curs = 0
-                    ticks = 0
-                    wait = 0
-
-                    clearInterval(_interval)
-
-                    _interval = null
-                },
-
-                start : function () {
-
-                    var autowrite = element().innerHTML = '';
-
-                    _interval = setInterval(function(){ 
-
-                        if(wait > 0) {
-                            wait --;
-                            return;
-                        }
-                        
-                        var c = fulltext.charAt(curs)
-                        
-                        var autowrite = element().innerHTML
-                        if(c !== '\n' && curs < fulltext.length ) {
-                            element().innerHTML += c
-                            curs++
-                            wait = (fulltext.charAt(curs) === '\n' || curs >= fulltext.length)? 10 : 2 
-                        } else if(autowrite !== '' || curs >= fulltext.length) {
-                            var newstr = autowrite.substring(0, autowrite.length - 1)
-                            element().innerHTML = newstr
-                            if(newstr === ''){
-                                curs++
-                                if(curs >= fulltext.length) curs = 0 
-                            } 
-                        }
-                    }, 50)
-                }
-            };
-        }
-
+        window._openCurtain = () => 
+            app._call(
+                '/w/api/articles.json', 
+                'articlesReceived', 
+                {usejson:true})
+                ._do('open')
 
     </script>
 
   </head>
-  <body class="" onload="app._call('/w/api/intro.txt', 'introReceived')" >
+  <body onload="_loadIntro()" >
       <header id="header">
+          
+        <script id="article-template" type="text/html">
+        <div class="article">
+            <div class="title"><a href="[url]" target="_blank">[title]</a></div>
+            <div class="desc">[desc]</div>
+            <div class="tags">[temp tag in tags]<span>[tag]</span>[temp]</div>
+        </div>
+        </script>
+        
+        <script id="global-tags-template" type="text/html">
+        <span onClick="app._do('research', '[tagname]')">[tagname]</span>
+        </script>
+    
           
         <div>
             <div>
                 <div>
-                    <br>
                     <img class="my-avatar" src="/w/img/avatar.jpg" />
-
                 </div>
+                
                 <div class="my-socials">
 
                     <a href="https://twitter.com/lionelthemonk" target="_blank">
@@ -230,8 +396,15 @@
                     </a>
 
                 </div>
-                <div class="robot"><span class="input" id="autowrite" ></span><span class="blink_me cursor"></span></div>
-                <div class="curtain-button open blink_me" onclick="app._call('/w/api/articles.json', 'articlesReceived', {usejson:true})._do('open')">
+
+                <div class="robot">
+                    <span class="input" id="autowrite" ></span>
+                    <span class="blink_me cursor"></span>
+                </div>
+                
+                <div 
+                    class="curtain-button open blink_me" 
+                    onclick="_openCurtain ()">
                     <i class="fa fa-arrow-circle-o-left fa-lg"></i>
                 </div>
                 <div class="curtain-button close" onclick="app._do('close')">
@@ -242,18 +415,20 @@
       </header>
 
       <div id="content">
-          <nav id="nav"><span>ARTICLES</span></nav>
 
-        <script id="article-template" type="text/html">
-            <div class="article">
-                <div class="title"><a href="[url]" target="_blank">[title]</a></div>
-                <div class="desc">[desc]</div>
-                <div class="tags">[temp tag in tags]<span>[tag]</span>[temp]</div>
+            <nav id="nav">
+                <div>
+                    <input 
+                        id="search-input" 
+                        onKeyup="app._do('researchText', '')" 
+                        />
+                </div>
+                <div id="nav-tags"></div>
+                <span id="clean-search" onClick="app._do('research', '')"><i class="fa fa-close fa-lg"></i> </span>
+            </nav>
+
+            <div id="display-items">
             </div>
-        </script>
-
-          <div id="display-items">
-          </div>
       </div>
           
   </body>

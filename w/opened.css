@@ -32,7 +32,7 @@
     display: inline-block;
     padding: 10px;
     font-size: 22px;
-    color:#ccc;
+    color:#aaa;
     cursor:pointer;
 }
 
@@ -49,3 +49,25 @@
 
     opacity: 0;
 }
+
+
+.opened #nav-tags {
+    display: inline-block
+}        
+    .opened #nav-tags span {
+        margin-right: 10px;
+        padding: 5px 10px;
+        display: inline-block
+    }
+
+    #nav #clean-search {
+        padding: 0
+    }
+
+    .opened #nav #clean-search {
+        display: none
+    }
+
+    .opened.active-search #nav #clean-search {
+        display: inline-block
+    }
