@@ -116,6 +116,7 @@
                 close : () => {
 
                     removeClass ('opened') (doc.body)
+                    doc.getElementById("search-input").value = ''
                     writing.start();   
                 },
 
@@ -417,7 +418,8 @@
       <div id="content">
 
             <nav id="nav">
-                <div>
+                <div id="search-input-zone">
+                    <span id="search-logo"><i class="fa fa-search fa-lg"></i></span>
                     <input 
                         id="search-input" 
                         onKeyup="app._do('researchText', '')" 

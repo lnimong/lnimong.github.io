@@ -148,6 +148,14 @@ body, html{
     max-width: 600px;
 }
 
+#search-input-zone { position: relative; }
+#search-input-zone #search-input { text-indent: 30px;}
+#search-input-zone #search-logo { 
+  position: absolute;
+  left: 7px;
+  font-size: 15px;
+}
+
 
 #content {
     font-family: 'Open Sans Light',Helvetica,Arial,sans-serif;
