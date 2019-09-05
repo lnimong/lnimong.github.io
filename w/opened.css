@@ -10,6 +10,7 @@
     width: calc(100% - 300px);
     opacity: 1;
     margin-left: 0;
+    height: 100%;
 } 
 .opened #content:before {
     content: ''
@@ -37,7 +38,9 @@
 }
 
 .opened #content>div {
-    padding: 30px
+    padding: 30px;
+    height: calc(100% - 140px);
+    overflow-y: auto;
 }
 
 .opened .my-avatar {    
