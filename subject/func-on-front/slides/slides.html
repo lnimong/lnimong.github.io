@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.reveal section img {
+				border: none;
+				box-shadow: none;
+			}
+			.reveal table th, .reveal table td {
+				border:none
+			}
+			.listing::first-letter {
+			font-size: 150%;
+			color: palevioletred;
+			}
+		</style>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>The reactive programming</h1>
+					<h3>** designing the GUI **</h3>
+				</section>
+
+				<section>
+					<section>
+						<img src="./img/nephew.png">
+						<h2 
+							style="background-color: black;color: white;display: inline-block;padding: 10px;position: absolute;bottom: 0;left: 0;transform: rotate(-5deg);"
+						>
+							what is programming ??
+						</h2>
+					</section>
+					<section>
+						<img src="./img/progr-wiki.png" style="width: 70%;">
+					</section>
+					<section >
+						<div style="display:flex;">
+							<img src="./img/my-proud-head.png">
+							<div style="
+								padding-top: 10%;
+							">
+								<div style="font-style: italic;">"programming is like writing a recipes for computers"</div> 
+								<div style="font-size: 50%;">-- lionel nimong, Feb 2020 --</div>
+							</div>
+						</div>
+					</section>
+					<section>
+						<pre style="box-shadow: none;">
+ti-punch recipe =
+	you might need 
+		- half a lime
+		- Sugar cane syrup or powdered cane sugar or honey 
+		- rhum agricole 
+
+	cut the lime into pieces
+
+	In the glass, 
+		if you have a pestle mash the lime pieces with a pestle
+		else use a spoon
+
+	if you have Sugar cane syrup
+		then add 2cl of it into the glass
+	else if you have powdered cane sugar 
+		then add a spoonful of it 
+	else if you have honey 
+		then add a spoonful of it 
+
+	add 5cl of rhum agricole
+	Stir gently
+
+	and done :) 
+						</pre>
+						<img style="
+							position: absolute;
+							bottom: 30px;
+							right: 60px;
+						" src="./img/tipunch.png">
+					</section>
+					<section>
+						<div style="
+							color: red;
+							border: 4px dashed red;
+							border-radius: 5px;
+							padding: 20px;
+							opacity: .5;
+							transform: rotate(-13deg);
+						">nothing tells you in which situation it's going to be used</div>
+					</section>
+					<section>
+						<img src="./img/repubas.png" style="
+							border-radius: 100%;
+							width: 60%;
+						">
+						<img src="./img/direct.png" style="
+							position: absolute;
+							right: 0;
+							top: 60%;
+							border-radius: 100%;
+						">
+					</section>
+					<section>
+						<div>on his way the driver will have to handle a lot of situations</div>
+						<img style="height: 500px;" src="./img/situation.png">
+						<span style="
+							color: red;
+							font-size: 150%;
+						">chaos</span>
+					</section>
+					<section>
+						<div>computers are idiots</div>
+						<div style="font-size: 8px;">also many people are</div>
+						<img src="https://thumbs.gfycat.com/RespectfulWearyBumblebee-small.gif" style="
+							width: 50%;
+						">
+						<div>fast... but idiots</div>
+					</section>
+					<section>
+						<div style="text-align: left;">
+							
+							<div class="listing">A recipe kind of code wouldn't be enough</div>
+							<div class="listing">It doesn't take into account the context in which the recipe is applied</div>
+							<div class="listing">We need another layer of instructions to tell th driver how react when some events occur</div>
+						
+						</div>
+					</section>
+					<section>
+						
+						<pre style="box-shadow: none; width: 50%; float: left;">
+
+// another kind of programming
+how to handle various situations =
+	
+	when you face situation A  
+		do....
+	when you face situation B  
+		do....
+	when you face situation C  
+		do....
+		</pre>
+						<img style="
+							float: right;
+						" src="./img/routcode.png">
+					</section>
+					<section>
+						<table>
+							<tr style="border: none;">
+								<td style="text-align: right; color: blue;">recipe</td>
+								<td></td>
+								<td style="color: red;">rules to handle events</td>
+							</tr>
+							<tr style="border: none;">
+								<td style="text-align: right; color: blue"></td>
+								<td>VS</td>
+								<td></td>
+							</tr>
+							<tr style="border: none;"">
+								<td style="text-align: right; color: blue">close to imperative programming</td>
+								<td></td>
+								<td style="color: red;">closer to reactive programming</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>A few examples</h2>
+					</section>
+					<section>
+						<img src="./img/modab.png">
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleA {
+
+	private ModuleB _modB;
+
+	public ModuleA (ModuleB modB) {
+		_modB = modB;
+	}
+
+	public void Update (Arg someArgs) {
+		// code for business rules
+		...
+		_modB.Update(someOtherArgs);
+	}
+
+}
+						</pre>
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleB {
+
+	private Result result;
+
+	public void Update (Arg someArgs) {
+		// code for business rules
+		...
+		this.result = updatedResult
+	}
+
+	public Result GetResult() {
+		return this.result
+	}
+
+}
+						</pre>
+
+					</section>
+					<section>
+						<img src="./img/modmor.png">
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleB {
+
+	public ModuleA (ModuleA modA) {
+		modA.OnUpdate(someArgs => this.Update(someArgs));
+	}
+
+	private void Update (Arg someArgs) {
+		// code for business rules
+		...
+		this.result = updatedResult
+	}
+
+
+	public Result GetResult() {
+		return this.result
+	}
+}
+						</pre>
+	
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleA {
+
+	List of Callback  callbacks;
+
+
+	private Update (Arg someArgs) {
+		// code for business rules
+		...
+		callbacks.CallEachWith(someOtherArgs)
+	}
+
+	public OnUpdate (Callback callback) {
+		this.callbacks.Add(callback)
+	}
+
+}
+						</pre>
+			
+					</section>
+					<section>
+						<img src="./img/excel.png">
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleB {
+
+
+	private void Update (Arg someArgs) {
+		// code for business rules
+		...
+		this.result = updatedResult
+	}
+
+
+	public Result GetResult(UpdatesStream stream) {
+		return stream.fold(x => this.Update(x))
+	}
+}
+						</pre>
+	
+					</section>
+				</section>
+				<section>
+					<section>
+						<div>Introducing RxJS</div>
+						<img src="./img/trend.png">
+						<a href="https://www.npmtrends.com/rxjs-vs-react-vs-angular-vs-vue-vs-ember-source-vs-@angular/core"
+							style="font-size: 12px;">https://www.npmtrends.com/rxjs-vs-react-vs-angular-vs-vue-vs-ember-source-vs-@angular/core</a>
+					</section>
+
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

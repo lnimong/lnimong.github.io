@@ -65,3 +65,8 @@ traffic rules / your code (most of the time)
 1. https://www.reactivemanifesto.org/fr
 2. https://www.youtube.com/watch?v=49dMGC1hM1o&list=PLHj70FYPojgFh-w8e_VmZvMZfKu4LQ_kb&index=4&t=0s
 
+
+Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to produce bigger and better idiots. So far, the universe is winning. (Rick Cook)
+
+Programming is the act of installing internal, pre-established reactions to external stimuli so that a person will automatically react in a predetermined manner to things like an auditory, visual or tactile signal or perform a specific set of actions according to a date and/or time.”
+― Alison Miller,
