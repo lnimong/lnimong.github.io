@@ -41,6 +41,10 @@
 			font-size: 150%;
 			color: palevioletred;
 			}
+
+			.listing {
+				text-align: left;
+			}
 		</style>
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -54,8 +58,16 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>The reactive programming</h1>
-					<h3>** designing the GUI **</h3>
+					<section>
+						<img style="height: 500px;" src="./img/meetupban.jpg">
+					</section>
+					
+					<section>
+						<h1>The reactive programming</h1>
+						<h3>** designing the GUI **</h3>
+					</section>
+
+
 				</section>
 
 				<section>
@@ -138,10 +150,12 @@ ti-punch recipe =
 					<section>
 						<div>on his way the driver will have to handle a lot of situations</div>
 						<img style="height: 500px;" src="./img/situation.png">
-						<span style="
-							color: red;
-							font-size: 150%;
-						">chaos</span>
+						<div> he will face
+							<span style="
+								color: red;
+								font-size: 150%;
+							">chaos</span>
+						</div>
 					</section>
 					<section>
 						<div>computers are idiots</div>
@@ -234,11 +248,11 @@ public class ModuleB {
 	public void Update (Arg someArgs) {
 		// code for business rules
 		...
-		this.result = updatedResult
+		this.result = updatedResult;
 	}
 
 	public Result GetResult() {
-		return this.result
+		return this.result;
 	}
 
 }
@@ -252,6 +266,8 @@ public class ModuleB {
 						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
 public class ModuleB {
 
+	private Result result;
+
 	public ModuleA (ModuleA modA) {
 		modA.OnUpdate(someArgs => this.Update(someArgs));
 	}
@@ -259,7 +275,7 @@ public class ModuleB {
 	private void Update (Arg someArgs) {
 		// code for business rules
 		...
-		this.result = updatedResult
+		this.result = updatedResult;
 	}
 
 
@@ -280,11 +296,11 @@ public class ModuleA {
 	private Update (Arg someArgs) {
 		// code for business rules
 		...
-		callbacks.CallEachWith(someOtherArgs)
+		callbacks.CallEachWith(someOtherArgs);
 	}
 
 	public OnUpdate (Callback callback) {
-		this.callbacks.Add(callback)
+		this.callbacks.Add(callback);
 	}
 
 }
@@ -294,10 +310,68 @@ public class ModuleA {
 					<section>
 						<img src="./img/excel.png">
 					</section>
+				</section>
+				<section>
+					<section>
+						<div>THE STREAM</div>
+						<img src="./img/streamdep.png">
+					</section>
+					<section>
+						<div class="listing">A stream is a sequence of data made available over time</div>
+						<div class="listing">The items in the stream are processed one at a time</div>
+					</section>
+					<section>
+						<div style="text-align: left;">remember this slide ?</div>
+						<img style="height: 500px;" src="./img/situation.png">
+						<div> he will face
+							<span style="
+								color: red;
+								font-size: 150%;
+							">chaos</span>
+						</div>
+					</section>
+					<section>
+						<div class="listing">The items in the stream are processed one at a time</div>
+						<div style="text-align: right; color: #bbb;">That is how you handle 
+							<span style="
+								color: red;
+								font-size: 150%;
+							">chaos</span>
+						</div>
+					</section>
+					<section>
+						<img src="./img/streamdep.png">
+						<img src="./img/stream.png">
+					</section>
 					<section>
 						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
 public class ModuleB {
 
+	private Result result;
+
+	public ModuleA (ModuleA modA) {
+		modA.OnUpdate(someArgs => this.Update(someArgs));
+	}
+
+	private void Update (Arg someArgs) {
+		// code for business rules
+		...
+		this.result = updatedResult;
+	}
+
+
+	public Result GetResult() {
+		return this.result
+	}
+}
+						</pre>
+			
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleB {
+
+	private Result result;
 
 	private void Update (Arg someArgs) {
 		// code for business rules
@@ -307,7 +381,22 @@ public class ModuleB {
 
 
 	public Result GetResult(UpdatesStream stream) {
-		return stream.fold(x => this.Update(x))
+		return stream.fold(x => this.Update(x));
+	}
+}
+						</pre>
+	
+					</section>
+					<section>
+						<pre style="box-shadow: none; background-color: black; color: greenyellow;">
+public class ModuleB {
+
+	public Result GetResult(UpdatesStream stream) {
+		return stream.fold(x => {
+			// code for business rules
+			...
+			this.result = updatedResult
+		});
 	}
 }
 						</pre>
@@ -316,10 +405,59 @@ public class ModuleB {
 				</section>
 				<section>
 					<section>
+						<div>-- Designing the GUI --</div>
+						<div>Whats is the responsiblity of the GUI ?</div>
+					</section>
+					<section>
+						<div style="text-align: left;">The backend...</div>
+						<img src="./img/back.png">
+					</section>
+					<section>
+						<img src="./img/seq.png">
+					</section>
+					<section>
+						<div style="font-size: 250px;">?</div>
+						<div>The UI</div>
+					</section>
+					<section>
+						<div class="listing">Display data</div>
+					</section>
+					<section>
+						<div class="listing">Managing a stream of interactions (from user(s), network, browser/computer...)</div>
+					</section>
+					<section>
+						<div class="listing">Managing 
+							<span style="
+								color: red;
+								font-size: 150%;
+							">chaos</span>
+						</div>
+					</section>
+					<section>
+						<div class="listing">The items in the stream are processed one at a time</div>
+						<div style="text-align: right; color: #bbb;">That is how you handle 
+							<span style="
+								color: red;
+								font-size: 150%;
+							">chaos</span>
+						</div>
+					</section>
+					<section>
+						<img style="float: left; height: 800px;" src="./img/front.png">
+						<div class="listing" style="padding: 20px; margin: 20px;">This is <a href="https://drive.google.com/file/d/1Rlg1B2Q5l7PjQNn9mzdv8A5teS_P9CYP/view?usp=sharing" target="_blank">how</a> we design the behavior of our GUIs</div>
+						<div class="listing" style="padding: 20px; margin: 20px;">By showing how it react to a stream of events</div>
+					</section>
+				</section>
+				<section>
+					<section>
 						<div>Introducing RxJS</div>
 						<img src="./img/trend.png">
 						<a href="https://www.npmtrends.com/rxjs-vs-react-vs-angular-vs-vue-vs-ember-source-vs-@angular/core"
 							style="font-size: 12px;">https://www.npmtrends.com/rxjs-vs-react-vs-angular-vs-vue-vs-ember-source-vs-@angular/core</a>
+					</section>
+					
+					<section>
+						<img src="https://24.media.tumblr.com/tumblr_mdqye4cVnD1rxagu2o1_500.gif">
 					</section>
 
 				</section>
