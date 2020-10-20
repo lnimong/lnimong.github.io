@@ -7,6 +7,13 @@
         "tags": ["fsharp", "ocaml","functionnal","code"]
     },
     {
+        "date": "20200628",
+        "title" : "The reactive programming: the case of the front #vpTech e-Meetup",
+        "desc" : "that's a video about reactive programming",
+        "url" : "https://www.youtube.com/watch?v=qe-at2yngUY",
+        "tags": ["javascript", "reactive","functionnal","react","event"]
+    },
+    {
         "date": "20150528",
         "title" : "Il était une fois… Reactjs (Episode 1)",
         "desc" : "Un article d'introduction à react, afin de se familiariser avec les notions de composants, classes de composants, d'état et de proprété",
