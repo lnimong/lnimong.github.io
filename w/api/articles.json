@@ -1,17 +1,17 @@
 [
     {
-        "date": "20180428",
-        "title" : "how to read ML like languages",
-        "desc" : "this is a small presentation about the reading of ML like languages",
-        "url" : "/ml-like-lang/",
-        "tags": ["fsharp", "ocaml","functionnal","code"]
-    },
-    {
         "date": "20200628",
         "title" : "The reactive programming: the case of the front #vpTech e-Meetup",
         "desc" : "that's a video about reactive programming",
         "url" : "https://www.youtube.com/watch?v=qe-at2yngUY",
         "tags": ["javascript", "reactive","functionnal","react","event"]
+    },
+    {
+        "date": "20180428",
+        "title" : "how to read ML like languages",
+        "desc" : "this is a small presentation about the reading of ML like languages",
+        "url" : "/ml-like-lang/",
+        "tags": ["fsharp", "ocaml","functionnal","code"]
     },
     {
         "date": "20150528",
